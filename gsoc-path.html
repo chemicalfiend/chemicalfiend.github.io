@@ -5,14 +5,16 @@
 </head>
 
 <body>
+    
+
+    <h1><b>JSoC Journal for Summer 2022</b></h1>
+
 
     <h3><b>What is this?</b></h3>
     
     <p> Well, one of the things I always wanted to do was get involved in writing software for a simulation package, both to help me understand implementations and to learn more about how the research community operates at that level. In this zeal, I joined the JuliaMolSim community and tried finding ways to contribute to a few packages. With some background in Molecular Dynamics, I was able to get involved in contributing to Molly.jl. I then decided to apply for the Julia Summer of Contributions programme and was accepted, so I am able to work on this project formally. As a part of tracking the development of my work I would like to log some of my contributions here so that both my mentors and I can keep a track of progress and see how things develop. </p>
 
     <p>The main focus of the project is to implement constraint algorithms in molecular dynamics simulations. More details about what those are, why they're useful and the schedule I've set for myself to follow for that can be found at my JSoC proposal <a href="https://github.com/chemicalfiend/chemicalfiend.github.io/raw/main/assets/doc/jsoc-proposal.pdf">here</a>. I would like to maintain some level of flexibility on this timeline and also like to contribute to some other areas of Molly.jl if I can but hope to complete all the deliverables by the end of the summer. For this sake, I have separated all the work under two headers, one for the work that is relevant to my JSoC proposal and the other which talks about my summer contributions to Molly.jl or related packages. All "relevant" JSoC work and some "irrelevant" tests can be tracked on my sandbox extension to Molly.jl, a GitHub repo titled <a href="https://github.com/chemicalfiend/md-constraints">md-constraints</a> where I can test and run things experimentally before pushing them to Molly.jl. Most of the other stuff will be pushed to Molly.jl or other packages directly via PRs from my branch.</p>
-
-    <h1> JSoC Journal for Summer 2022 </h1>
     
     <h2><b>Relevant Work : </b></h2>
     
@@ -26,7 +28,7 @@
     
     <h2><b>Other PRs / Contributions : </b> </h2>
 
-    <h3><b><a href="https://github.com/JuliaMolSim/Molly.jl/pull/63">PR #63</a> Fixed visualization issue with Makie.jl</b></a>
+    <h3><b><a href="https://github.com/JuliaMolSim/Molly.jl/pull/63">PR #63</a> Fixed visualization issue with Makie.jl</b></a></h3>
 
     <p>Changed the markerspace parameter on the scatter function to feed makie the required data type (looks like the TypeSpace style has been removed from Makie? I can't find the exact point in the version control where this happened but seems to be the case). Also added LinearAlgebra since norm wasn't working on the diatomics simulation without it.</p>
 
