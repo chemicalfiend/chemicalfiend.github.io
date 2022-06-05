@@ -6,17 +6,40 @@
 
 <body>
 
-    <h1> GSoC Contribution Journal </h1>
+    <h3><b>What is this?</b></h3>
+    
+    <p> Well, one of the things I always wanted to do was get involved in writing software for a simulation package, both to help me understand implementations and to learn more about how the research community operates at that level. In this zeal, I joined the JuliaMolSim community and tried finding ways to contribute to a few packages. With some background in Molecular Dynamics, I was able to get involved in contributing to Molly.jl. I then decided to apply for the Julia Summer of Contributions programme and was accepted, so I am able to work on this project formally. As a part of tracking the development of my work I would like to log some of my contributions here so that both my mentors and I can keep a track of progress and see how things develop. </p>
 
-    <h3><b>PR#44 added velocity autocorrelation</b></h3>
+    <p>The main focus of the project is to implement constraint algorithms in molecular dynamics simulations. More details about what those are, why they're useful and the schedule I've set for myself to follow for that can be found at my JSoC proposal <a href="https://github.com/chemicalfiend/chemicalfiend.github.io/raw/main/assets/doc/jsoc-proposal.pdf">here</a>. I would like to maintain some level of flexibility on this timeline and also like to contribute to some other areas of Molly.jl if I can but hope to complete all the deliverables by the end of the summer. For this sake, I have separated all the work under two headers, one for the work that is relevant to my JSoC proposal and the other which talks about my summer contributions to Molly.jl or related packages. All "relevant" JSoC work and some "irrelevant" tests can be tracked on my sandbox extension to Molly.jl, a GitHub repo titled <a href="https://github.com/chemicalfiend/md-constraints">md-constraints</a> where I can test and run things experimentally before pushing them to Molly.jl. Most of the other stuff will be pushed to Molly.jl or other packages directly via PRs from my branch.</p>
+
+    <h1> JSoC Journal for Summer 2022 </h1>
+    
+    <h2><b>Relevant Work : </b></h2>
+    
+    <h2><b>Getting the ball rolling (May 25 - June 5)</b><h2>
+
+            <p> I didn't get too much done, but I started the md-constraints repo and set the structure out for my approach to constraints in the system. Before getting to SHAKE or any established constraint algorthm I wanted to see if I can get a constraint of any sort running in the first place so set up the "explicit" directory which has to calculate a computationally taxing matrix inverse at every iteration. <a href = "https://github.com/chemicalfiend/md-constraints/commit/62cc581c0cf3901a40e64d555476b16930f98778">Relevant commit</a>. I hope I can complete this simple constraint and test it on a toy system as soon as possible so that I can start working on actual constraint algorithms.</p>
+
+            <p> I also fiddled around with visualisation for a bit since I wanted to see if bonds and angles stay put like I want them to when I run a constrained simulation (see PR#63 in "Other PRs / Contributions). </p>
+
+
+    
+    <h2><b>Other PRs / Contributions : </b> </h3>
+
+    <h3><b><a href="https://github.com/JuliaMolSim/Molly.jl/pull/63">PR #63</a> Fixed visualization issue with Makie.jl</b></a>
+
+    <p>Changed the markerspace parameter on the scatter function to feed makie the required data type (looks like the TypeSpace style has been removed from Makie? I can't find the exact point in the version control where this happened but seems to be the case). Also added LinearAlgebra since norm wasn't working on the diatomics simulation without it.</p>
+
+
+    <h3><b><a href="https://github.com/JuliaMolSim/Molly.jl/pull/52">PR #52</a> Morse bonded interaction</b></h3>
+
+    <p> MorseBond was added to Molly.jl in <a href="https://github.com/JuliaMolSim/Molly.jl/pull/52">PR #52</a> following a similar pattern to the structure HarmonicBond. This is a potential that accuratel  y resembles the experimental energy vs bond distance curve. </p>
+
+
+    <h3><b><a href="https://github.com/JuliaMolSim/Molly.jl/pull/44">PR #44</a> added velocity autocorrelation</b></h3>
 
     <p> Coordinate, Temperature and Energy loggers were already implemented in Molly.jl and working well. However for analysis, it helps to have a velocity logger to calculate the velocity autocorrelation function, which is a good measure of "memory" for non-equilibrium systems where properties change with respect to time. In <a href="https://github.com/JuliaMolSim/Molly.jl/pull/44">PR #44</a> I implemented the velocity logger and velocity autocorrelation function</p>
-
-
-
-    <h3><b>PR#52 Morse bonded interaction</b></h3>
-
-    <p> MorseBond was added to Molly.jl in <a href="https://github.com/JuliaMolSim/Molly.jl/pull/52">PR #52</a> following a similar pattern to the structure HarmonicBond. This is a potential that accurately resembles the experimental energy vs bond distance curve. </p>
+   
     
 
 </body>
