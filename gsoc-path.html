@@ -17,8 +17,14 @@
     <p>The main focus of the project is to implement constraint algorithms in molecular dynamics simulations. More details about what those are, why they're useful and the schedule I've set for myself to follow for that can be found at my JSoC proposal <a href="https://github.com/chemicalfiend/chemicalfiend.github.io/raw/main/assets/doc/jsoc-proposal.pdf">here</a>. I would like to maintain some level of flexibility on this timeline and also like to contribute to some other areas of Molly.jl if I can but hope to complete all the deliverables by the end of the summer. For this sake, I have separated all the work under two headers, one for the work that is relevant to my JSoC proposal and the other which talks about my summer contributions to Molly.jl or related packages. All "relevant" JSoC work and some "irrelevant" tests can be tracked on my sandbox extension to Molly.jl, a GitHub repo titled <a href="https://github.com/chemicalfiend/md-constraints">md-constraints</a> where I can test and run things experimentally before pushing them to Molly.jl. Most of the other stuff will be pushed to Molly.jl or other packages directly via PRs from my branch.</p>
     
     <h2><b>Relevant Work : </b></h2>
+
+    <h3><b>SHAKE Constraint Algorithm (June 26-)</b></h3>
+
+    <p> June 26 : Set up the backbone for SHAKE constraint based on the testing done with explicit.jl. 
     
     <h3><b>Analytical Constraint Method (June 5 -)</b></h3>
+
+    <p> June 26 : Completed debugging analytical explicit method test, however for a 10 molecule test, the constraint step doesn't appear to converge. Will have to test on a smaller system and maybe make a few more corrections to get it to run perfectly on a few molecules.
 
     <p> June 8 : Finished the backbone code for explicit (after figuring out how to work InteractionList2Atoms, System and coords). Still need to make several minor changes and test and debug the code on a small system of 2 water molecules (4x4 Jacobian matrix). </p>
 
