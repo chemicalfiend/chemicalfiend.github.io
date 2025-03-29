@@ -1,0 +1,18 @@
+* Articles
+
+** Intro + law of large nos
+** What do the moments / cumulants mean?
+*** Constructing a "unique" distribution from the moments / cumulants (moment problems)
+*** One decent way to approximate a distribution from its moments / cumulants 
+*** Varying the moments and seeing what happens to the distribution
+*** Tail events and tail risk
+** Flavours of CLT
+*** Maxwell distribution
+*** Gaussian Process NN / Showcase nice GP stuff
+*** Variances goes as t-distribution
+*** Requires bounded variance - Pareto does not follow CLT and has really interesting outliers.
+*** 
+** Path integrals for options pricing
+** Entropy is not disorder
+*** Make a nice package for liquid crystal / colloidal NP simulation
+** Avalanche as a phase transition

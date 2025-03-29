@@ -1,0 +1,13 @@
+* Articles
+
+** Intro + law of large nos
+** Flavours of CLT
+*** Maxwell distribution
+*** Gaussian Process NN / Showcase nice GP stuff
+*** Variances goes as t-distribution
+*** Requires bounded variance - Pareto does not follow CLT and has really interesting outliers.
+*** 
+** Path integrals for options pricing
+** Entropy is not disorder
+*** Make a nice package for liquid crystal / colloidal NP simulation
+** Avalanche as a phase transition
