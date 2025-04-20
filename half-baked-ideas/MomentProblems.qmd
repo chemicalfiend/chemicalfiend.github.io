@@ -1,0 +1,134 @@
+---
+title: Moment Problems in Probability
+jupyter: julia-1.11
+---
+
+
+- Really cool applied math problem : can you construct a probability distribution from its moments / cumulants?
+- Would such a construction be unique? What kind of associated issues can you run into with such a construction
+
+
+# Naive Approach : Fourier Transform
+
+```{julia}
+using QuadGK
+using Integrals
+```
+
+```{julia}
+using LinearAlgebra
+using Plots
+using FFTW
+```
+
+```{julia}
+cums = [0.0, 100, 0.0, 3.0];
+```
+
+```{julia}
+function characteristic_function(x; cumz=cums)
+    s = 0. + 0.0im
+    for (n, cum) in enumerate(cumz)
+        if (n < 20)
+            s += cum * ((x*1.0im)^n) / factorial(n)
+        else
+            # Use stirling's approximation if n > 20
+            s += cum * ((x*1.0im)^n) / (n^n * exp(n))
+        end
+    end
+    return exp(s)
+end
+```
+
+```{julia}
+characteristic_function(0.02)
+```
+
+```{julia}
+t = -1:0.1:1
+plot(t, real.(characteristic_function.(t)), title="Real part of characteristic function", ylabel="phi(x)")
+```
+
+
+```{julia}
+y = -200:0.01:200
+ϕ = characteristic_function.(y)
+F = fftshift(fft(ϕ)); # Fourier transform of characteristic function gives us the distribution
+```
+
+```{julia}
+function P(x)
+    i = argmin(abs.(y .- x))
+    return abs(real(F[i]))
+end
+```
+
+```{julia}
+#norm, _ = quadgk(P, -Inf, Inf)
+```
+
+```{julia}
+function prob(x)
+    return P(x)
+end
+```
+
+```{julia}
+#| scrolled: true
+#quadgk(prob, -Inf, Inf)
+```
+
+```{julia}
+plot(y, prob, title="Probability Distribution", ylabel="P(x)")
+```
+
+```{julia}
+import Pkg; Pkg.add("MCIntegration")
+using MCIntegration
+```
+
+```{julia}
+#| scrolled: true
+x3prob(x, p) = (x^4)*prob(x)
+intprob = IntegralProblem(x3prob, (-Inf, Inf))
+#sol = solve(intprob, QuadGKJL(), reltol = 1e-3, abstol = 1e-3)
+```
+
+```{julia}
+#sol.u
+```
+
+
+```{julia}
+# Smoothing via moving averages
+
+binsize = 150
+
+K = abs.(real.(prob))
+
+mov = []
+xaxis = []
+for i in 1:(length(enumerate(K))-binsize)
+    sum = 0
+    for j in 1:binsize
+        sum += K[i+j-1]
+    end
+    push!(mov, sum/binsize)
+    push!(xaxis, x[i])
+end
+```
+
+```{julia}
+plot(xaxis, mov, title="Probability Distribution Smoothed")
+```
+
+```{julia}
+using Turing
+using StatsPlots
+```
+
+Reading
+1. Classical Moment Problem, Akhiezer
+2. 
+
+

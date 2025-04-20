@@ -1,0 +1,34 @@
+---
+jupyter: julia-1.11
+---
+
+[Half-Baked Ideas](https://chemicalfiend.github.io/half-baked-ideas/half-baked.html)
+
+# The Julia Programming Language
+
+Julia is probably my favourite programming language. It's so simple, easy-to-use, versatile and feature-rich. Scientists have for years been using python for ease and C or Fortran for speed, but now you have it all in one package that does everything for you. It's super convenient, super easy and super reliable. 
+
+# How I got into Julia
+
+I've been a julia programmer for a few years now. Initially, I was using Julia exclusively as a scripting language to automate some tasks for my research work [md_utils](https://github.com/chemicalfiend/md_utils). After some time I discovered the JuliaMolSim community, which I've tried working with. So far, I've contributed to the [Molly.jl](https://github.com/JuliaMolSim/Molly.jl) and [AtomsBase.jl](https://github.com/JuliaMolSim/AtomsBase.jl) packages, though I hope to contribute a lot more in the future to the ecosystem as a whole  My main contribution to this ecosystem was participating in the **Julia Summer of Code 2022** programme, where I added bond and angle constraint features to the Molly.jl package. I later worked with the Frost Group at Imperial College London, where I helped develop the group's julia codebase to work on non-adiabatic dynamics and path integral monte carlo simulations to study polarons in semiconductor materials.
+
+```{julia}
+# code for fun to see if it works
+
+using LinearAlgebra
+
+A = [1.0 0.0; 0.0 50.0]
+F = svd(A)
+F.U
+```
+
+# Julia Features
+Things I want to write about : 
+- [ ] Native JIT
+- [ ] Efficient broadcasting
+- [ ] Multitheading
+- [ ] GPU
+- [ ] Extensive DiffEq library / fast implementations.
+- [ ] Extensive plotting / animation libraries e.g. Makie
+
+

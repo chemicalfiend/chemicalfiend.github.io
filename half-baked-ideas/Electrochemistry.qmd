@@ -1,0 +1,35 @@
+---
+jupyter: julia-1.11
+---
+
+Made by Pranay Venkatesh April 2025
+
+# Electrochemistry : Fundamentals, Applications and Theory
+
+- Rapidly developing field for which I'm trying to maintain an (as usual) inadequate placeholder.
+- There was a class for undergrads in my university called "electrochemistry : fundamentals and applications" and I'm stealing that course title and adding theory so that I can do some thinking on chemical physics for these problems.
+- Int
+
+# Kindergarten Electrochemistry
+- Favourable Reaction => Voltage or Voltage => Drives a reaction
+- 
+
+# Noob's Electrochemistry
+-
+
+# Kinetics Beyond BVE
+
+# Marcus-Hush-Chidsey
+
+# Modelling Interfaces 
+
+# Ionic Transport
+
+To Read:
+1. Bard and Faulkner
+2. [Alex zinc anodes](https://doi.org/10.1002/smll.202306827)
+3. [tom thesis](https://www.repository.cam.ac.uk/items/31a60645-69d9-41dd-8be4-2da4f4255600)
+4. [electrochemical kinetics julia code](https://github.com/BattModels/ElectrochemicalKinetics.jl)
+5. [AIMD in Batteries](https://doi.org/10.1007/978-3-031-47303-6_12)
+
+

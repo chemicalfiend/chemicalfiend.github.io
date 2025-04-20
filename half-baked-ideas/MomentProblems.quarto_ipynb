@@ -1,0 +1,268 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Moment Problems in Probability\n",
+        "jupyter: julia-1.11\n",
+        "---\n",
+        "\n",
+        "\n",
+        "\n",
+        "- Really cool applied math problem : can you construct a probability distribution from its moments / cumulants?\n",
+        "- Would such a construction be unique? What kind of associated issues can you run into with such a construction\n",
+        "\n",
+        "\n",
+        "# Naive Approach : Fourier Transform\n"
+      ],
+      "id": "d8845b17"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "using QuadGK\n",
+        "using Integrals"
+      ],
+      "id": "03191389",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "using LinearAlgebra\n",
+        "using Plots\n",
+        "using FFTW"
+      ],
+      "id": "b0ecb87e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "cums = [0.0, 100, 0.0, 3.0];"
+      ],
+      "id": "62867579",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "function characteristic_function(x; cumz=cums)\n",
+        "    s = 0. + 0.0im\n",
+        "    for (n, cum) in enumerate(cumz)\n",
+        "        if (n < 20)\n",
+        "            s += cum * ((x*1.0im)^n) / factorial(n)\n",
+        "        else\n",
+        "            # Use stirling's approximation if n > 20\n",
+        "            s += cum * ((x*1.0im)^n) / (n^n * exp(n))\n",
+        "        end\n",
+        "    end\n",
+        "    return exp(s)\n",
+        "end"
+      ],
+      "id": "9ead6d09",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "characteristic_function(0.02)"
+      ],
+      "id": "745e1107",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "t = -1:0.1:1\n",
+        "plot(t, real.(characteristic_function.(t)), title=\"Real part of characteristic function\", ylabel=\"phi(x)\")"
+      ],
+      "id": "19061add",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "y = -200:0.01:200\n",
+        "ϕ = characteristic_function.(y)\n",
+        "F = fftshift(fft(ϕ)); # Fourier transform of characteristic function gives us the distribution"
+      ],
+      "id": "bfd89f5e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "function P(x)\n",
+        "    i = argmin(abs.(y .- x))\n",
+        "    return abs(real(F[i]))\n",
+        "end"
+      ],
+      "id": "97ec4567",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#norm, _ = quadgk(P, -Inf, Inf)"
+      ],
+      "id": "da98f9d9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "function prob(x)\n",
+        "    return P(x)\n",
+        "end"
+      ],
+      "id": "bef99be8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "scrolled": true
+      },
+      "source": [
+        "#quadgk(prob, -Inf, Inf)"
+      ],
+      "id": "7a45df22",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plot(y, prob, title=\"Probability Distribution\", ylabel=\"P(x)\")"
+      ],
+      "id": "f33b2747",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import Pkg; Pkg.add(\"MCIntegration\")\n",
+        "using MCIntegration"
+      ],
+      "id": "63d44373",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "scrolled": true
+      },
+      "source": [
+        "x3prob(x, p) = (x^4)*prob(x)\n",
+        "intprob = IntegralProblem(x3prob, (-Inf, Inf))\n",
+        "#sol = solve(intprob, QuadGKJL(), reltol = 1e-3, abstol = 1e-3)"
+      ],
+      "id": "103588f3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#sol.u"
+      ],
+      "id": "feec7d05",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Smoothing via moving averages\n",
+        "\n",
+        "binsize = 150\n",
+        "\n",
+        "K = abs.(real.(prob))\n",
+        "\n",
+        "mov = []\n",
+        "xaxis = []\n",
+        "for i in 1:(length(enumerate(K))-binsize)\n",
+        "    sum = 0\n",
+        "    for j in 1:binsize\n",
+        "        sum += K[i+j-1]\n",
+        "    end\n",
+        "    push!(mov, sum/binsize)\n",
+        "    push!(xaxis, x[i])\n",
+        "end"
+      ],
+      "id": "413e982a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plot(xaxis, mov, title=\"Probability Distribution Smoothed\")"
+      ],
+      "id": "c443d374",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "using Turing\n",
+        "using StatsPlots"
+      ],
+      "id": "ee916fc1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Reading\n",
+        "1. Classical Moment Problem, Akhiezer\n",
+        "2. \n"
+      ],
+      "id": "b79d9e10"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "julia-1.11",
+      "language": "julia",
+      "display_name": "Julia 1.11.4",
+      "path": "/home/pranay/.local/share/jupyter/kernels/julia-1.11"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

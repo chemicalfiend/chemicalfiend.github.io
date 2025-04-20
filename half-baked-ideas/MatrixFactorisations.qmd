@@ -1,0 +1,104 @@
+---
+jupyter: julia-1.11
+---
+
+Made by Pranay Venkatesh, April 2025
+
+```{julia}
+using LinearAlgebra
+```
+
+# Singular Value Decomposition
+
+- SVD is a handy linear algebra decomposition that I learned by watching Gilbert Strang the summer before I started undergrad since I was bored and I had heard that it was useful to learn linear algebra.
+- An SVD is at some level a generalisation of the eigenvalue decomposition. Recall : the eigenvalue decomposition for a Hermitian matrix A was $A = U \Lambda U^{\dagger}$ where $U$ is the unitary matrix of eigenvectors and $\Lambda$ is a diagonal matrix of eigenvalues. If A was instead **not** a Hermitian or even a square matrix, then this doesn't really apply, so we can instead factorise as $A = U \Sigma V^{\dagger}$.
+- Now that A needn't be a square matrix, U and V have different dimensions. $U$ is a matrix that happens to contains the eigenvectors of the Hermitian matrix $A A^{\dagger}$ and $V$ is a matrix that happens to contain the eigenvectors of the Hermitian matrix $A^{\dagger} A$
+- $\Sigma$ is a diagonal matrix of what are called "singular values" for this system. Note that $\Sigma^{\dagger} \Sigma$ are the eigenvalues of $A^{\dagger} A$ and $\Sigma \Sigma^{\dagger}$ are the eigenvalues of $A A^{\dagger}$. The square of the singular values are the eigenvalues of the matrices $A^{\dagger} A$ or $A A^{\dagger}$ (obviously they have different number of eigenvalues but you can capture the non-zero ones easily at least).
+- From a linear algebra perspective : we can think of the SVD as resulting from trying to construct an orthonormal basis in the rowspace using an orthonormal basis in the columnspace. Stacking the columnspace vectors together is V and stacking the rowspace vectors together is U. You get something similar to an eigenvalue equation. For eigenvalue equations : $A v = \lambda v$ while for singular value equations you get $A v = \sigma u$ since A need not be square, v and u can be of different dimensions.
+- Upto a sign factor on the elements of U and V, the SVD is unique for a matrix A.
+- If A is a Hermitian positive-definite matrix, then the SVD reduces to an eigenvalue decomposition.
+  
+These are all fairly easy to describe with a Julia code
+
+```{julia}
+A = [1. 0. 0. 0. 2.; 0. 0. 3. 0. 0.; 0. 3. 6. 0. 0.; 0. 2. 0. 0. 0.]
+F = svd(A)
+```
+
+```{julia}
+Aleft = A * transpose(A)
+Aright = transpose(A) * A
+```
+
+```{julia}
+eigen(Aleft)
+```
+
+```{julia}
+eigen(Aright)
+```
+
+```{julia}
+(F.S).^2
+```
+
+## Why SVDs?
+
+- There are several ways to factorise matrices to use them to do various things, but SVDs are particularly handy since the truncated SVD of rank k is the *best* approximation (of rank k) to the original matrix A. This is called the Eckart-Young theorem.
+- If $A = U \Sigma V^{\dagger} = \sigma_1 u_1 v_1^{\dagger} + \sigma_2 u_2 v_2^{\dagger} + ... \sigma_r u_r v_r^{\dagger}$ is a rank r matrix, then the rank k truncation is given by $A_k = U_k \Sigma_k V_k^{\dagger} = \sigma_1 u_1 v_1^{\dagger} + \sigma_2 u_2 v_2^{\dagger} + ... \sigma_k u_k v_k^{\dagger}$ where of course k < r.
+- **NOTE**: when we make this truncation, we sort the singular values in descending order, so that we only drop terms with the lowest singular values or the lowest importance.
+- More formally we use the Froebenius norm, defined by $||A||_F = \sum\limits_{i, j} |A_{i,j}|^2$ to say that given a matrix A and the SVD representation of rank k given by $A_k$, then any matrix B of rank k would have the property $||A - A_k||_F \leq ||A - B||_F$ or that $A_k$ is the closer to $A$ than any matrix B of rank k.
+- This is nice to look at with a julia code
+
+```{julia}
+# SVD truncation 
+
+function tsvd(A::Matrix, k::Int)
+    F = svd(A)
+    U, S, V = F.U, F.S, F.V
+    U_k = U[:, 1:k]
+    S_k = S[1:k]
+    Vt_k = V[:, 1:k]'
+    A_k = U_k * Diagonal(S_k) * Vt_k
+    
+    return U_k, S_k, Vt_k, A_k
+end
+
+u, s, v, a = tsvd(A, 2) # Rank 2 truncation
+
+norm(A - a, 2)
+```
+
+```{julia}
+U = randn(4, 2)
+V = randn(2, 5)
+
+B = U * V
+print(rank(B))
+norm(A - B, 2)
+```
+
+You can keep running the last block of code and you will find that the norm(A - B) will never go above norm(A - a). Note that here B is constructed to be a rank 2 matrix.
+
+- SVD is particularly handy for the construction and propagation of **matrix product states** (MPS) which is what led me to come back and revisit some of the beautiful matrix math that underlies these methods.
+
+- SVD is also a great way to compute the null-space of a matrix. The columnvectors of V corresponding to singular value = 0 are the nullspace of the matrix A. For example, for a Markov model $\frac{dp}{dt} = A p$, you can find the final steady-state distribution by computing the null-space of A using an SVD.
+
+# QR Decomposition
+
+- The QR decomposition is another matrix factorisation that I learned from Gilbert Strang rather than my (highly inadequate) undergraduate linear algebra class.
+- Any square matrix A can be decomposed into Q times R where Q is an orthogonal matrix and R is an upper triangular matrix. So why would we want to do this? Because this is a useful way to compute the eigenvalues for a hermitian matrix.
+- Start by noting : If you write $A_0 = Q_0 R_0$ and then you get a new matrix $A_1 = R_0 Q_0$ (order swapped), then $A_1$ and $A_0$ have the same eigenvalues since $A_1 = R_0 A_0 R_0^{-1}$ (they are related by a similarity).
+- If you keep repeating this procedure of QR decomposition followed by swapping the matrix orders, it turns out that the diagonal elements of $A_n$ become the eigenvalues pretty quickly since the off-diagonals become small (very fast).
+- QR is faster on GPUs than SVDs and hence you can also do a QR decomposition when using MPS (there's a Frank Pollman paper on Arxiv that does this)
+
+```{julia}
+qr(A)
+```
+
+Relevant Reading: 
+1. Strang 18.06, 18.065 (more computational : this is the course that got me introduced to [julia](https://chemicalfiend.github.io/half-baked-ideas/julia.html)
+2. Numerical Recipes in C : goldmine for computational things
+3. [QR in MPS](https://arxiv.org/pdf/2212.09782)
+
+

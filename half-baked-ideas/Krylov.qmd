@@ -1,0 +1,18 @@
+---
+jupyter: julia-1.11
+---
+
+Made by Pranay Venkatesh, April 2025
+
+# Krylov Subspace Methods
+- for now an inadequate placeholder for what should be a decent set of notes for using Krylov subspace methods in numerical linear algebra problems
+- Lanczos algorithm
+- GMRES
+- Arnoldi iteration
+- MPS consequences
+
+To Read
+- [ ] [Van Der Vost Krylov Subspace](https://doi.org/10.1016/0377-0427(87)90020-3)
+- [ ] 
+
+
