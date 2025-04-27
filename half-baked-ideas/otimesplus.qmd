@@ -55,7 +55,7 @@ kron(ϕ1, ϕ2)
 
 - How would you encode an operator that operates on the state $\ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2}$.
 - If $H_1$ operates on $\ket{\phi_1}$ leaving $\ket{\phi_2}$ unchanged and $H_2$ operates on $\ket{\phi_2}$ leaving $\ket{\phi_1}$ unchanged, then the Hamiltonian for the net system has the form $H (\ket{\phi_1} \otimes \ket{\phi_2}) = (H_1 \ket{\phi_1})\otimes \ket{\phi_2} + \ket{\phi_1} \otimes (H_2 \ket{\phi_2})$.
-- Which means that the Hamiltonian H has the form $H = H_1 \otimes I + I \otimes H_2$.
+- Which means that the Hamiltonian H has the form $\boxed{H = H_1 \otimes I + I \otimes H_2}$.
 - For example: consider $H_1 = \omega_1 \sigma_x$ and if $H_2 = \omega_2 \sigma_z$.
 - If you had an interaction term $H_{\text{int}} = \eta (\sigma_x \otimes \sigma_z)$, then the Hamiltonian would look like $H = H_1 \otimes I + I \otimes H_2 + H_{\text{int}}$.
 - We can now evolve an initially unentangled pair of density matrices $\rho_1 \otimes \rho_2$ with this Hamiltonian : 

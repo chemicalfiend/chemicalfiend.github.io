@@ -132,7 +132,7 @@ window.Quarto = {
 </header>
 
 
-<div id="5b33c235" class="cell" data-execution_count="1">
+<div id="add64943" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -146,12 +146,12 @@ window.Quarto = {
 <li>It is computed by : <span class="math inline">\(A \otimes B = \begin{pmatrix} a_{11} B  &amp; a_{12} B &amp; \cdots \\ a_{21} B &amp; a_{22} B &amp; \cdots \\ \vdots &amp; \vdots &amp; \ddots \end{pmatrix}\)</span></li>
 <li>For example :</li>
 </ul>
-<div id="920ad00b" class="cell" data-execution_count="2">
+<div id="6a072d0a" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">2.0</span>; <span class="fl">3.0</span> <span class="fl">4.0</span>]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">3.0</span>; <span class="fl">3.0</span> <span class="fl">1.0</span>]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kron</span>(A, B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>4×4 Matrix{Float64}:
  1.0  3.0   2.0   6.0
  3.0  1.0   6.0   2.0
@@ -164,11 +164,11 @@ window.Quarto = {
 <li>You can write the element of the direct product space <span class="math inline">\(\ket{\psi} \in \mathbb{H}\)</span> as the direct product of the elements <span class="math inline">\(\ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2}\)</span>.</li>
 <li>If you have simple state vectors <span class="math inline">\(\ket{\phi_1} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}\)</span> and <span class="math inline">\(\ket{\phi_2} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}\)</span> then you can use the same Kronecker product language to write out <span class="math inline">\(\ket{\psi}\)</span> :</li>
 </ul>
-<div id="e66207b7" class="cell" data-execution_count="3">
+<div id="cf32d2f7" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ϕ<span class="fl">1</span> <span class="op">=</span> [<span class="fl">0</span>, <span class="fl">1</span>]</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ϕ<span class="fl">2</span> <span class="op">=</span> [<span class="fl">1</span>, <span class="fl">0</span>]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kron</span>(ϕ<span class="fl">1</span>, ϕ<span class="fl">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>4-element Vector{Int64}:
  0
  0
@@ -191,12 +191,12 @@ window.Quarto = {
 <li><p>Recall that a system is <strong>not entangled</strong> if its density matrix can be decomposed as <span class="math inline">\(\rho_{AB} = \rho_A \otimes \rho_B\)</span>.</p></li>
 <li><p>How would you encode an operator that operates on the state <span class="math inline">\(\ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2}\)</span>.</p></li>
 <li><p>If <span class="math inline">\(H_1\)</span> operates on <span class="math inline">\(\ket{\phi_1}\)</span> leaving <span class="math inline">\(\ket{\phi_2}\)</span> unchanged and <span class="math inline">\(H_2\)</span> operates on <span class="math inline">\(\ket{\phi_2}\)</span> leaving <span class="math inline">\(\ket{\phi_1}\)</span> unchanged, then the Hamiltonian for the net system has the form <span class="math inline">\(H (\ket{\phi_1} \otimes \ket{\phi_2}) = (H_1 \ket{\phi_1})\otimes \ket{\phi_2} + \ket{\phi_1} \otimes (H_2 \ket{\phi_2})\)</span>.</p></li>
-<li><p>Which means that the Hamiltonian H has the form <span class="math inline">\(H = H_1 \otimes I + I \otimes H_2\)</span>.</p></li>
+<li><p>Which means that the Hamiltonian H has the form <span class="math inline">\(\boxed{H = H_1 \otimes I + I \otimes H_2}\)</span>.</p></li>
 <li><p>For example: consider <span class="math inline">\(H_1 = \omega_1 \sigma_x\)</span> and if <span class="math inline">\(H_2 = \omega_2 \sigma_z\)</span>.</p></li>
 <li><p>If you had an interaction term <span class="math inline">\(H_{\text{int}} = \eta (\sigma_x \otimes \sigma_z)\)</span>, then the Hamiltonian would look like <span class="math inline">\(H = H_1 \otimes I + I \otimes H_2 + H_{\text{int}}\)</span>.</p></li>
 <li><p>We can now evolve an initially unentangled pair of density matrices <span class="math inline">\(\rho_1 \otimes \rho_2\)</span> with this Hamiltonian :</p></li>
 </ul>
-<div id="df9c6253" class="cell" data-execution_count="4">
+<div id="f96cb8e2" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>: eigen</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>σx <span class="op">=</span> [<span class="fl">0</span> <span class="fl">1</span>; <span class="fl">1</span> <span class="fl">0</span>]</span>
@@ -230,7 +230,7 @@ window.Quarto = {
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>ρt <span class="op">=</span> U <span class="op">*</span> ρ<span class="fl">0</span> <span class="op">*</span> Udagger</span>
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>ρt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>4×4 Matrix{ComplexF64}:
     0.0656516+0.0im          0.0682016-0.106218im  …      0.109366+0.070223im
     0.0682016+0.106218im        0.2427+0.0im          -8.32667e-17+0.249893im
