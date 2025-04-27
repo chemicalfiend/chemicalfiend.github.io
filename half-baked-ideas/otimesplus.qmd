@@ -1,0 +1,102 @@
+---
+title: Direct Products and Sums
+author: Pranay Venkatesh, Created April 2025
+jupyter: julia-1.11
+format:
+  html:
+    grid:
+      margin-width: 100px
+      body-width: 1100px
+---
+
+```{julia}
+using LinearAlgebra
+using SparseArrays
+```
+
+This is a quick reference to self for direct products and direct sums. I first encountered these in second year of undergrad, but I end up forgetting some details about them.
+
+# Direct Products
+
+- The first context I saw this in was in group theory where if you have a group $(G, *)$ and a group $(H, +)$ then you can construct a direct product of these two groups, where the group elements are ordered pairs $(g,h)$ (where $g \in G$, $h \in H$) and the group operation acts independently on the elements corresponding to their parent group, e.g. $(g_1, h_1).(g_2, h_2) = (g_1 * g_2, h_1 + h_2)$.
+- Consider this in representation theory : if $G$ has an irrep $\rho_{g}$ and H has an irrep $\rho_{h}$, then $\rho_{g1}(g_1)$ and $\rho_{h}$ are matrices. The representation corresponding to $(g,h)$ in the direct product group is then given by : $(\rho_{g} \otimes \rho_h)(g, h)$.
+- Here $\rho_g \otimes \rho_h$ is called the **direct product** or **Kronecker product** or **tensor product** of matrices.
+- It is computed by : $A \otimes B = \begin{pmatrix} a_{11} B  & a_{12} B & \cdots \\ a_{21} B & a_{22} B & \cdots \\ \vdots & \vdots & \ddots \end{pmatrix}$
+- For example : 
+```{julia}
+
+A = [1.0 2.0; 3.0 4.0]
+B = [1.0 3.0; 3.0 1.0]
+
+kron(A, B)
+```
+- If you have state-vectors coming from 2 Hilbert spaces $\mathbb{H}_1$ and $\mathbb{H}_2$, then you can construct a direct product space $\mathbb{H} = \mathbb{H}_1 \otimes \mathbb{H}_2$ has elements $(\ket{\phi_1}, \ket{\phi_2})$ where $\ket{\phi_1} \in \mathbb{H}_1$ and $\ket{\phi_2} \in \mathbb{H}_2$
+- You can write the element of the direct product space $\ket{\psi} \in \mathbb{H}$ as the direct product of the elements $\ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2}$.
+- If you have simple state vectors $\ket{\phi_1} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ and $\ket{\phi_2} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$ then you can use the same Kronecker product language to write out $\ket{\psi}$ : 
+
+```{julia}
+ϕ1 = [0, 1]
+ϕ2 = [1, 0]
+kron(ϕ1, ϕ2)
+```
+- The output here is $\begin{pmatrix} 
+0 \\ 
+0 \\ 
+1 \\ 
+0
+\end{pmatrix}$ with 1 in the third element of the vector and you can think of this as coming as a result of being the third element of the set of combinations : $\left\{
+\left( \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 1 \\ 0 \end{bmatrix} \right),
+\left( \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \end{bmatrix} \right),
+\left( \begin{bmatrix} 0 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 0 \end{bmatrix} \right),
+\left( \begin{bmatrix} 0 \\ 1 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \end{bmatrix} \right)
+\right\}$. Using any of the other combinations in the codeblock above would yield a 1 in the index corresponding to the position in this set.
+
+- Recall that a system is **not entangled** if its density matrix can be decomposed as $\rho_{AB} = \rho_A \otimes \rho_B$.
+
+- How would you encode an operator that operates on the state $\ket{\psi} = \ket{\phi_1} \otimes \ket{\phi_2}$.
+- If $H_1$ operates on $\ket{\phi_1}$ leaving $\ket{\phi_2}$ unchanged and $H_2$ operates on $\ket{\phi_2}$ leaving $\ket{\phi_1}$ unchanged, then the Hamiltonian for the net system has the form $H (\ket{\phi_1} \otimes \ket{\phi_2}) = (H_1 \ket{\phi_1})\otimes \ket{\phi_2} + \ket{\phi_1} \otimes (H_2 \ket{\phi_2})$.
+- Which means that the Hamiltonian H has the form $H = H_1 \otimes I + I \otimes H_2$.
+- For example: consider $H_1 = \omega_1 \sigma_x$ and if $H_2 = \omega_2 \sigma_z$.
+- If you had an interaction term $H_{\text{int}} = \eta (\sigma_x \otimes \sigma_z)$, then the Hamiltonian would look like $H = H_1 \otimes I + I \otimes H_2 + H_{\text{int}}$.
+- We can now evolve an initially unentangled pair of density matrices $\rho_1 \otimes \rho_2$ with this Hamiltonian : 
+```{julia}
+using LinearAlgebra: eigen
+
+σx = [0 1; 1 0]
+σy = [0 -im; im 0]
+σz = [1 0; 0 -1]
+I2 = Matrix{ComplexF64}(I, 2, 2)
+
+ω1 = 1.0
+ω2 = 0.5
+η  = 0.2
+
+H1 = ω1 * σx
+H2 = ω2 * σz
+
+H_total = kron(H1, I2) + kron(I2, H2) + η * kron(σx, σz)
+
+ρ1 = [1.0 0.0; 0.0 0.0]  # spin 1 in |0⟩⟨0|
+ρ2 = [0.5 0.5; 0.5 0.5]  # spin 2 in |+⟩⟨+| (equal superposition)
+
+ρ0 = kron(ρ1, ρ2) 
+
+t = 1.0 
+
+eig = eigen(H_total)
+Λ = eig.values
+V = eig.vectors
+
+U = V * Diagonal(exp.(-im * Λ * t)) * V'
+Udagger = V * Diagonal(exp.(im * Λ * t)) * V'
+
+ρt = U * ρ0 * Udagger
+
+ρt
+```
+
+# Direct Sums
+
+
+
+

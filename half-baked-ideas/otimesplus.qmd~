@@ -1,0 +1,17 @@
+---
+title: Direct Sums and Products
+author: Pranay Venkatesh, Created April 2025
+jupyter: python3
+format:
+  html:
+    grid:
+      margin-width: 100px
+      body-width: 1100px
+  
+  pdf:
+    toc: false
+    number-sections: false
+    colorlinks: true
+---
+
+
