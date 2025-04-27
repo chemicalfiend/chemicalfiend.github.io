@@ -10,7 +10,7 @@ using LinearAlgebra
 
 # Singular Value Decomposition
 
-- SVD is a handy linear algebra decomposition that I learned by watching Gilbert Strang the summer before I started undergrad since I was bored and I had heard that it was useful to learn linear algebra.
+- SVD is a handy linear algebra decomposition that I learned by watching Gilbert Strang the summer before I started undergrad, expecting it to ease my troubles when I took math courses. Funnily we never ended up doing the SVD in my undergrad linear algebra class.
 - An SVD is at some level a generalisation of the eigenvalue decomposition. Recall : the eigenvalue decomposition for a Hermitian matrix A was $A = U \Lambda U^{\dagger}$ where $U$ is the unitary matrix of eigenvectors and $\Lambda$ is a diagonal matrix of eigenvalues. If A was instead **not** a Hermitian or even a square matrix, then this doesn't really apply, so we can instead factorise as $A = U \Sigma V^{\dagger}$.
 - Now that A needn't be a square matrix, U and V have different dimensions. $U$ is a matrix that happens to contains the eigenvectors of the Hermitian matrix $A A^{\dagger}$ and $V$ is a matrix that happens to contain the eigenvectors of the Hermitian matrix $A^{\dagger} A$
 - $\Sigma$ is a diagonal matrix of what are called "singular values" for this system. Note that $\Sigma^{\dagger} \Sigma$ are the eigenvalues of $A^{\dagger} A$ and $\Sigma \Sigma^{\dagger}$ are the eigenvalues of $A A^{\dagger}$. The square of the singular values are the eigenvalues of the matrices $A^{\dagger} A$ or $A A^{\dagger}$ (obviously they have different number of eigenvalues but you can capture the non-zero ones easily at least).
@@ -78,7 +78,7 @@ print(rank(B))
 norm(A - B, 2)
 ```
 
-You can keep running the last block of code and you will find that the norm(A - B) will never go above norm(A - a). Note that here B is constructed to be a rank 2 matrix.
+You can keep running the last block of code and you will find that the norm(A - B) will never go below norm(A - a), showing that a is as close as you will get to A. Note that here B is constructed to be a random rank 2 matrix, but the code doesn't stop the voodoo possibility of randomly getting linearly dependent rows or columns in a random construction.
 
 - SVD is particularly handy for the construction and propagation of **matrix product states** (MPS) which is what led me to come back and revisit some of the beautiful matrix math that underlies these methods.
 
@@ -96,8 +96,9 @@ You can keep running the last block of code and you will find that the norm(A - 
 qr(A)
 ```
 
-Relevant Reading: 
-1. Strang 18.06, 18.065 (more computational : this is the course that got me introduced to [julia](https://chemicalfiend.github.io/half-baked-ideas/julia.html)
+Relevant Reading:
+ 
+1. Strang 18.06, 18.065 (more computational : this is the course that got me introduced to [julia](https://chemicalfiend.github.io/half-baked-ideas/julia.html) )
 2. Numerical Recipes in C : goldmine for computational things
 3. [QR in MPS](https://arxiv.org/pdf/2212.09782)
 

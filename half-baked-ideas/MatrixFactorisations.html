@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.37">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -63,10 +63,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="MatrixFactorisations_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="MatrixFactorisations_files/libs/quarto-html/anchor.min.js"></script>
 <link href="MatrixFactorisations_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="MatrixFactorisations_files/libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="MatrixFactorisations_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="MatrixFactorisations_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="MatrixFactorisations_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="MatrixFactorisations_files/libs/bootstrap/bootstrap-7464a93ad6bd371d7d467a5bfad28742.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="MatrixFactorisations_files/libs/bootstrap/bootstrap-9101e0e7ac209239e30eb02416a029e7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -126,11 +126,11 @@ window.Quarto = {
 
 
 <p>Made by Pranay Venkatesh, April 2025</p>
-<div id="e66b6307" class="cell" data-execution_count="1">
+<div id="7ad72109" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>SVD is a handy linear algebra decomposition that I learned by watching Gilbert Strang the summer before I started undergrad since I was bored and I had heard that it was useful to learn linear algebra.</li>
+<li>SVD is a handy linear algebra decomposition that I learned by watching Gilbert Strang the summer before I started undergrad, expecting it to ease my troubles when I took math courses. Funnily we never ended up doing the SVD in my undergrad linear algebra class.</li>
 <li>An SVD is at some level a generalisation of the eigenvalue decomposition. Recall : the eigenvalue decomposition for a Hermitian matrix A was <span class="math inline">\(A = U \Lambda U^{\dagger}\)</span> where <span class="math inline">\(U\)</span> is the unitary matrix of eigenvectors and <span class="math inline">\(\Lambda\)</span> is a diagonal matrix of eigenvalues. If A was instead <strong>not</strong> a Hermitian or even a square matrix, then this doesn’t really apply, so we can instead factorise as <span class="math inline">\(A = U \Sigma V^{\dagger}\)</span>.</li>
 <li>Now that A needn’t be a square matrix, U and V have different dimensions. <span class="math inline">\(U\)</span> is a matrix that happens to contains the eigenvectors of the Hermitian matrix <span class="math inline">\(A A^{\dagger}\)</span> and <span class="math inline">\(V\)</span> is a matrix that happens to contain the eigenvectors of the Hermitian matrix <span class="math inline">\(A^{\dagger} A\)</span></li>
 <li><span class="math inline">\(\Sigma\)</span> is a diagonal matrix of what are called “singular values” for this system. Note that <span class="math inline">\(\Sigma^{\dagger} \Sigma\)</span> are the eigenvalues of <span class="math inline">\(A^{\dagger} A\)</span> and <span class="math inline">\(\Sigma \Sigma^{\dagger}\)</span> are the eigenvalues of <span class="math inline">\(A A^{\dagger}\)</span>. The square of the singular values are the eigenvalues of the matrices <span class="math inline">\(A^{\dagger} A\)</span> or <span class="math inline">\(A A^{\dagger}\)</span> (obviously they have different number of eigenvalues but you can capture the non-zero ones easily at least).</li>
@@ -139,10 +139,10 @@ window.Quarto = {
 <li>If A is a Hermitian positive-definite matrix, then the SVD reduces to an eigenvalue decomposition.</li>
 </ul>
 <p>These are all fairly easy to describe with a Julia code</p>
-<div id="ff7290f2" class="cell" data-execution_count="2">
+<div id="5987ad62" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1</span>. <span class="fl">0</span>. <span class="fl">0</span>. <span class="fl">0</span>. <span class="fl">2</span>.; <span class="fl">0</span>. <span class="fl">0</span>. <span class="fl">3</span>. <span class="fl">0</span>. <span class="fl">0</span>.; <span class="fl">0</span>. <span class="fl">3</span>. <span class="fl">6</span>. <span class="fl">0</span>. <span class="fl">0</span>.; <span class="fl">0</span>. <span class="fl">2</span>. <span class="fl">0</span>. <span class="fl">0</span>. <span class="fl">0</span>.]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>F <span class="op">=</span> <span class="fu">svd</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="25">
 <pre><code>SVD{Float64, Float64, Matrix{Float64}, Vector{Float64}}
 U factor:
 4×4 Matrix{Float64}:
@@ -164,10 +164,10 @@ Vt factor:
   0.0       0.0        0.0        1.0  0.0</code></pre>
 </div>
 </div>
-<div id="7bd114d5" class="cell" data-execution_count="3">
+<div id="7166f054" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Aleft <span class="op">=</span> A <span class="op">*</span> <span class="fu">transpose</span>(A)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Aright <span class="op">=</span> <span class="fu">transpose</span>(A) <span class="op">*</span> A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="26">
 <pre><code>5×5 Matrix{Float64}:
  1.0   0.0   0.0  0.0  2.0
  0.0  13.0  18.0  0.0  0.0
@@ -176,9 +176,9 @@ Vt factor:
  2.0   0.0   0.0  0.0  4.0</code></pre>
 </div>
 </div>
-<div id="1d7f9ea9" class="cell" data-execution_count="4">
+<div id="b20e0f91" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eigen</span>(Aleft)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="27">
 <pre><code>Eigen{Float64, Float64, Matrix{Float64}, Vector{Float64}}
 values:
 4-element Vector{Float64}:
@@ -194,9 +194,9 @@ vectors:
   0.557086  -0.822806  0.0  0.112453</code></pre>
 </div>
 </div>
-<div id="53ebcf46" class="cell" data-execution_count="5">
+<div id="96ee39ca" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eigen</span>(Aright)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>Eigen{Float64, Float64, Matrix{Float64}, Vector{Float64}}
 values:
 5-element Vector{Float64}:
@@ -214,9 +214,9 @@ vectors:
   0.0   0.447214   0.0       0.894427  0.0</code></pre>
 </div>
 </div>
-<div id="499c3b0c" class="cell" data-execution_count="6">
+<div id="f608470d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>(F.S)<span class="op">.^</span><span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="29">
 <pre><code>4-element Vector{Float64}:
  53.0831891575846
   5.000000000000001
@@ -233,7 +233,7 @@ vectors:
 <li>More formally we use the Froebenius norm, defined by <span class="math inline">\(||A||_F = \sum\limits_{i, j} |A_{i,j}|^2\)</span> to say that given a matrix A and the SVD representation of rank k given by <span class="math inline">\(A_k\)</span>, then any matrix B of rank k would have the property <span class="math inline">\(||A - A_k||_F \leq ||A - B||_F\)</span> or that <span class="math inline">\(A_k\)</span> is the closer to <span class="math inline">\(A\)</span> than any matrix B of rank k.</li>
 <li>This is nice to look at with a julia code</li>
 </ul>
-<div id="d0d0b5d7" class="cell" data-execution_count="7">
+<div id="cb7f7c4a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SVD truncation </span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">tsvd</span>(A<span class="op">::</span><span class="dt">Matrix</span>, k<span class="op">::</span><span class="dt">Int</span>)</span>
@@ -250,11 +250,11 @@ vectors:
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>u, s, v, a <span class="op">=</span> <span class="fu">tsvd</span>(A, <span class="fl">2</span>) <span class="co"># Rank 2 truncation</span></span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">norm</span>(A <span class="op">-</span> a, <span class="fl">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="30">
 <pre><code>2.2173882931086766</code></pre>
 </div>
 </div>
-<div id="560c54a3" class="cell" data-execution_count="8">
+<div id="755f4f43" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> <span class="fu">randn</span>(<span class="fl">4</span>, <span class="fl">2</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> <span class="fu">randn</span>(<span class="fl">2</span>, <span class="fl">5</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -264,11 +264,11 @@ vectors:
 <div class="cell-output cell-output-stdout">
 <pre><code>2</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>10.623192172132516</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<pre><code>9.538712887748947</code></pre>
 </div>
 </div>
-<p>You can keep running the last block of code and you will find that the norm(A - B) will never go above norm(A - a). Note that here B is constructed to be a rank 2 matrix.</p>
+<p>You can keep running the last block of code and you will find that the norm(A - B) will never go below norm(A - a), showing that a is as close as you will get to A. Note that here B is constructed to be a random rank 2 matrix, but the code doesn’t stop the voodoo possibility of randomly getting linearly dependent rows or columns in a random construction.</p>
 <ul>
 <li><p>SVD is particularly handy for the construction and propagation of <strong>matrix product states</strong> (MPS) which is what led me to come back and revisit some of the beautiful matrix math that underlies these methods.</p></li>
 <li><p>SVD is also a great way to compute the null-space of a matrix. The columnvectors of V corresponding to singular value = 0 are the nullspace of the matrix A. For example, for a Markov model <span class="math inline">\(\frac{dp}{dt} = A p\)</span>, you can find the final steady-state distribution by computing the null-space of A using an SVD.</p></li>
@@ -283,9 +283,9 @@ vectors:
 <li>If you keep repeating this procedure of QR decomposition followed by swapping the matrix orders, it turns out that the diagonal elements of <span class="math inline">\(A_n\)</span> become the eigenvalues pretty quickly since the off-diagonals become small (very fast).</li>
 <li>QR is faster on GPUs than SVDs and hence you can also do a QR decomposition when using MPS (there’s a Frank Pollman paper on Arxiv that does this)</li>
 </ul>
-<div id="90515c96" class="cell" data-execution_count="9">
+<div id="a27439a6" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qr</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="32">
 <pre><code>LinearAlgebra.QRCompactWY{Float64, Matrix{Float64}, Matrix{Float64}}
 Q factor: 4×4 LinearAlgebra.QRCompactWYQ{Float64, Matrix{Float64}, Matrix{Float64}}
 R factor:
@@ -296,7 +296,12 @@ R factor:
  0.0   0.0       0.0      0.0  0.0</code></pre>
 </div>
 </div>
-<p>Relevant Reading: 1. Strang 18.06, 18.065 (more computational : this is the course that got me introduced to <a href="https://chemicalfiend.github.io/half-baked-ideas/julia.html">julia</a> 2. Numerical Recipes in C : goldmine for computational things 3. <a href="https://arxiv.org/pdf/2212.09782">QR in MPS</a></p>
+<p>Relevant Reading:</p>
+<ol type="1">
+<li>Strang 18.06, 18.065 (more computational : this is the course that got me introduced to <a href="https://chemicalfiend.github.io/half-baked-ideas/julia.html">julia</a> )</li>
+<li>Numerical Recipes in C : goldmine for computational things</li>
+<li><a href="https://arxiv.org/pdf/2212.09782">QR in MPS</a></li>
+</ol>
 </section>
 
 </main>
