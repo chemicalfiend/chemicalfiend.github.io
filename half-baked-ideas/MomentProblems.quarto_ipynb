@@ -17,7 +17,7 @@
         "\n",
         "# Naive Approach : Fourier Transform\n"
       ],
-      "id": "d8845b17"
+      "id": "a867fba6"
     },
     {
       "cell_type": "code",
@@ -26,7 +26,7 @@
         "using QuadGK\n",
         "using Integrals"
       ],
-      "id": "03191389",
+      "id": "1d18d78b",
       "execution_count": null,
       "outputs": []
     },
@@ -38,7 +38,7 @@
         "using Plots\n",
         "using FFTW"
       ],
-      "id": "b0ecb87e",
+      "id": "a84bf67b",
       "execution_count": null,
       "outputs": []
     },
@@ -48,7 +48,7 @@
       "source": [
         "cums = [0.0, 100, 0.0, 3.0];"
       ],
-      "id": "62867579",
+      "id": "994fd2c0",
       "execution_count": null,
       "outputs": []
     },
@@ -69,7 +69,7 @@
         "    return exp(s)\n",
         "end"
       ],
-      "id": "9ead6d09",
+      "id": "664d53ec",
       "execution_count": null,
       "outputs": []
     },
@@ -79,7 +79,7 @@
       "source": [
         "characteristic_function(0.02)"
       ],
-      "id": "745e1107",
+      "id": "674a23a7",
       "execution_count": null,
       "outputs": []
     },
@@ -90,7 +90,7 @@
         "t = -1:0.1:1\n",
         "plot(t, real.(characteristic_function.(t)), title=\"Real part of characteristic function\", ylabel=\"phi(x)\")"
       ],
-      "id": "19061add",
+      "id": "49a0eb04",
       "execution_count": null,
       "outputs": []
     },
@@ -102,7 +102,7 @@
         "ϕ = characteristic_function.(y)\n",
         "F = fftshift(fft(ϕ)); # Fourier transform of characteristic function gives us the distribution"
       ],
-      "id": "bfd89f5e",
+      "id": "b3c9cf4e",
       "execution_count": null,
       "outputs": []
     },
@@ -115,7 +115,7 @@
         "    return abs(real(F[i]))\n",
         "end"
       ],
-      "id": "97ec4567",
+      "id": "7ae3b73b",
       "execution_count": null,
       "outputs": []
     },
@@ -125,7 +125,7 @@
       "source": [
         "#norm, _ = quadgk(P, -Inf, Inf)"
       ],
-      "id": "da98f9d9",
+      "id": "2d073fda",
       "execution_count": null,
       "outputs": []
     },
@@ -137,7 +137,7 @@
         "    return P(x)\n",
         "end"
       ],
-      "id": "bef99be8",
+      "id": "77892900",
       "execution_count": null,
       "outputs": []
     },
@@ -149,7 +149,7 @@
       "source": [
         "#quadgk(prob, -Inf, Inf)"
       ],
-      "id": "7a45df22",
+      "id": "6aa26ec6",
       "execution_count": null,
       "outputs": []
     },
@@ -159,7 +159,7 @@
       "source": [
         "plot(y, prob, title=\"Probability Distribution\", ylabel=\"P(x)\")"
       ],
-      "id": "f33b2747",
+      "id": "cd0ad88c",
       "execution_count": null,
       "outputs": []
     },
@@ -170,7 +170,7 @@
         "import Pkg; Pkg.add(\"MCIntegration\")\n",
         "using MCIntegration"
       ],
-      "id": "63d44373",
+      "id": "818b8e79",
       "execution_count": null,
       "outputs": []
     },
@@ -184,7 +184,7 @@
         "intprob = IntegralProblem(x3prob, (-Inf, Inf))\n",
         "#sol = solve(intprob, QuadGKJL(), reltol = 1e-3, abstol = 1e-3)"
       ],
-      "id": "103588f3",
+      "id": "3685a4da",
       "execution_count": null,
       "outputs": []
     },
@@ -194,7 +194,7 @@
       "source": [
         "#sol.u"
       ],
-      "id": "feec7d05",
+      "id": "7e7c2fe6",
       "execution_count": null,
       "outputs": []
     },
@@ -219,7 +219,7 @@
         "    push!(xaxis, x[i])\n",
         "end"
       ],
-      "id": "413e982a",
+      "id": "5cf76f10",
       "execution_count": null,
       "outputs": []
     },
@@ -229,18 +229,7 @@
       "source": [
         "plot(xaxis, mov, title=\"Probability Distribution Smoothed\")"
       ],
-      "id": "c443d374",
-      "execution_count": null,
-      "outputs": []
-    },
-    {
-      "cell_type": "code",
-      "metadata": {},
-      "source": [
-        "using Turing\n",
-        "using StatsPlots"
-      ],
-      "id": "ee916fc1",
+      "id": "7af2158a",
       "execution_count": null,
       "outputs": []
     },
@@ -252,7 +241,7 @@
         "1. Classical Moment Problem, Akhiezer\n",
         "2. \n"
       ],
-      "id": "b79d9e10"
+      "id": "2c15ecb4"
     }
   ],
   "metadata": {

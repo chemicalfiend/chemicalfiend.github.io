@@ -122,10 +122,6 @@ end
 plot(xaxis, mov, title="Probability Distribution Smoothed")
 ```
 
-```{julia}
-using Turing
-using StatsPlots
-```
 
 Reading
 1. Classical Moment Problem, Akhiezer

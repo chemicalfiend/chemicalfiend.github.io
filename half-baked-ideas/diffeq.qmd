@@ -1,0 +1,19 @@
+---
+title: Differential Equations
+author: Pranay Venkatesh
+date: May 2025
+jupyter: julia-1.11
+---
+
+
+# Numerical Methods for Differential Equation Solving
+
+## Euler Method
+
+## Runge-Kutta 4th Order
+
+# Resources / To-Read
+
+- [DifferentialEquations.jl](https://docs.sciml.ai/DiffEqDocs/stable/)
+- Evans, Partial Differential Equations
+- Numerical Recipes in C
