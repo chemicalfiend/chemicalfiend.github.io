@@ -30,8 +30,10 @@ Things I want to write about :
 - [ ] Native JIT
 - [ ] Macros, Metaprogramming and other Lispicities
 - [ ] Efficient broadcasting
+- [ ] AutoDiff
 - [ ] Multitheading
 - [ ] GPU
+- [ ] C and Fortran calls
 - [ ] Extensive DiffEq library / fast implementations.
 - [ ] Extensive plotting / animation libraries e.g. Makie
 
