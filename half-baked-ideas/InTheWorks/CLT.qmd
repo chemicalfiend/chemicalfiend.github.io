@@ -6,8 +6,6 @@ Created by Pranay Venkatesh, April 2025
 
 # Central Limit Theorem
 
-- Inadequate placeholder for a very interesting "emergent" phenomenon.
-
 TODO 
 - [ ] The moments and cumulants of a normal distribution
 - [ ] Weak and strong forms of CLT

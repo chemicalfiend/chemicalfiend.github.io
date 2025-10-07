@@ -13,7 +13,6 @@ Words
 
 Plotting
 
-- [Gnuplot tricks](https://gnuplot-tricks.blogspot.com/)
 - [Beautiful Makie](https://beautiful.makie.org)
 - [Coolor](https://coolor.co)
 

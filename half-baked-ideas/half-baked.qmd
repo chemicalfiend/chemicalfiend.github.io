@@ -13,4 +13,3 @@ It has been a goal of mine for a long time to maintain a set of notebooks with h
 - [Direct Products, Direct Sums and Entanglement](https://chemicalfiend.github.io/half-baked-ideas/otimesplus.html)
 - [Matrix Factorisations (SVD, QR)](https://chemicalfiend.github.io/half-baked-ideas/MatrixFactorisations.html)
 - [The Julia Programming Language](https://chemicalfiend.github.io/half-baked-ideas/julia.html)
-- [The United Kingdom](https://chemicalfiend.github.io/half-baked-ideas/uk.html)

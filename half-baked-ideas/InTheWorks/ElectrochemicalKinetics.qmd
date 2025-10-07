@@ -4,26 +4,21 @@ jupyter: julia-1.11
 
 Made by Pranay Venkatesh April 2025
 
-# Electrochemistry : Fundamentals, Applications and Theory
+# Electrochemical Kinetics : Fundamentals and Applications
 
-- Rapidly developing field for which I'm trying to maintain an (as usual) inadequate placeholder.
-- There was a class for undergrads in my university called "electrochemistry : fundamentals and applications" and I'm stealing that course title and adding theory so that I can do some thinking on chemical physics for these problems.
+- There was a class for undergrads in my university called "electrochemistry : fundamentals and applications" and I'm stealing that course title for basics in electrochemical kinetics.
 - Int
 
 # Kindergarten Electrochemistry
 - Favourable Reaction => Voltage or Voltage => Drives a reaction
 
-# Noob's Electrochemistry
+# Basic Electrochemistry
 - Electrode => butler-volmer equation represents kinetics.
 - ions migrate yay.
 
 # Kinetics Beyond BVE
 
 ## Marcus-Hush-Chidsey
-
-# Modelling Interfaces 
-
-# Ionic Transport
 
 To Read:
 
