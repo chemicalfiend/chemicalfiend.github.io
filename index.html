@@ -1,37 +1,86 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title> Pranay Venkatesh's Personal Page </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pranay Venkatesh's Personal Page</title>
+<style>
+  :root {
+    --fg: #222;
+    --bg: #fafafa;
+    --accent: #0645ad;
+    --muted: #666;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg: #e6e6e6;
+      --bg: #1a1a1a;
+      --accent: #8ab4f8;
+      --muted: #999;
+    }
+  }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    max-width: 40em;
+    margin: 2em auto;
+    padding: 0 1em;
+    line-height: 1.6;
+    color: var(--fg);
+    background: var(--bg);
+  }
+  header { text-align: center; margin-bottom: 2em; }
+  h1 { font-size: 1.6em; margin-bottom: 0.2em; }
+  h2 { font-size: 1.2em; margin-top: 2em; border-bottom: 1px solid var(--muted); padding-bottom: 0.2em; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  nav { color: var(--muted); font-size: 0.95em; }
+  nav a { margin: 0 0.3em; }
+  img.portrait {
+    display: block;
+    margin: 1.5em auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  ul, ol { padding-left: 1.4em; }
+  li { margin-bottom: 0.3em; }
+</style>
 </head>
 <body>
 
-<center> 
-<h1> <u> Pranay Venkatesh's Website </u> </h1>
+<header>
+  <h1>Pranay Venkatesh</h1>
+  <nav>
+    <a href="https://scholar.google.com/citations?user=4szVTK4AAAAJ&hl=en&oi=ao">G-Scholar</a> ·
+    <a href="https://github.com/chemicalfiend">GitHub</a> ·
+    <a href="https://www.linkedin.com/in/pranay-venkatesh-1a191143/">LinkedIn</a>
+  </nav>
+</header>
 
-Links : <a href="https://scholar.google.com/citations?user=4szVTK4AAAAJ&hl=en&oi=ao">G-Scholar</a> | <a href="https://github.com/chemicalfiend">GitHub</a> | <a href="https://www.linkedin.com/in/pranay-venkatesh-1a191143/">LinkedIn</a>
+<main>
 
+<img class="portrait" src="dp_me_w_hume.png" alt="Pranay Venkatesh" width="245" height="254">
 
-</center>
-
- <img src="dp_me_w_hume.png" alt=" " width="245" height="254">
-
-<br /><br /><br />
-
-<h2> Some things about me </h2>
+<h2>About me</h2>
 
 <ul>
-    <li> I am a PhD student at the University of Colorado, Boulder</li>
-    <li> I did my undergrad at BITS Pilani (MSc. Chemistry + B.E. Chemical Engineering) and did my masters' thesis at Imperial College London.</li>
-    <li>Broadly, I am interested in theoretical methods to investigate dynamics in condensed phase systems. Some of the things that I think about : 
-      <ol style="I; margin-left: 1em">
-          <li> Quantum dynamics method development </li>
-          <li> Leveraging decoherence to develop quantum-enhanced imaging </li>
-          <li> Nonequilibrium transport in quantum materials</li>
-          <li> Chemical physics of optoelectronic devices</li>
-          <li> Pretty much anything where you can use fun mathematical models and simulations for studying matter</li>
-        </ol>
-    </li>
-    <li> I love writing code in Julia.
-    <li> I like anime, philosophy and carnatic music.
+  <li>I am a PhD student at the University of Colorado, Boulder.</li>
+  <li>I did my undergrad at BITS Pilani (MSc. Chemistry + B.E. Chemical Engineering) and did my master's thesis at Imperial College London.</li>
+  <li>Broadly, I am interested in theoretical methods to investigate charge, spin and energy transfer dynamics in molecular and solid-state systems. Some of the things that I think about:
+    <ol>
+      <li>Quantum dynamics method development</li>
+      <li>Noise spectroscopy and quantum-enhanced sensing</li>
+      <li>Nonequilibrium transport in quantum materials</li>
+      <li>Chemical physics of optoelectronic devices</li>
+      <li>Pretty much anything where you can use fun mathematical models and simulations for studying matter</li>
+    </ol>
+  </li>
+  <li>I like anime, hiking and strange metal music.</li>
 </ul>
 
+</main>
+
 </body>
+</html>
