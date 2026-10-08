@@ -72,20 +72,23 @@ avatar = "img/dp_me_w_hume.png"
 
 # Short bio shown to the right of the portrait. Markdown is rendered.
 bio = """
-I am a PhD student at the University of Colorado, Boulder, working on theoretical
-methods for charge, spin and energy transfer dynamics in molecular and solid-state
-systems. Before this I read Chemistry and Chemical Engineering at BITS Pilani, and
-wrote my master's thesis at Imperial College London.
+I am a theoretical chemist. I work on mathematical models and simulation 
+techniques in an effort to guide next-generation materials design.
+Specifically, I develop methods to study charge, spin and energy dynamics 
+in quantum materials and condensed-phase chemical systems. 
 
-Outside of research I like anime, hiking and strange metal music.
+I am particularly interested in statistical mechanics and quantum dynamics
+and love using them to simulate the large soup of interacting atoms, electrons
+and photons that are involved in the science of real disordered matter out of equilibrium.
+
+Outside of research I like cooking, watching anime, hiking and playing the bass guitar.
 """
 
 interests = [
-  "Quantum dynamics method development",
-  "Noise spectroscopy and quantum-enhanced sensing",
-  "Nonequilibrium transport in quantum materials",
-  "Chemical physics of optoelectronic devices",
-  "Mathematical models and simulations of matter",
+  "Quantum Dynamics",
+  "Condensed Matter Physics",
+  "Optoelectronics",
+  "Nanomaterials"
 ]
 
 [[params.education]]
@@ -99,7 +102,7 @@ institution = "BITS Pilani"
 year = ""
 
 [[params.education]]
-course = "Master's thesis"
+course = "Master's Thesis"
 institution = "Imperial College London"
 year = ""
 
