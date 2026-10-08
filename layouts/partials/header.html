@@ -1,0 +1,64 @@
+{{- /*
+  Overrides themes/hugo-classic/layouts/partials/header.html.
+  Changes from the theme's version:
+    - .Site.LanguageCode -> .Site.Language.Locale (deprecated in Hugo 0.158)
+    - favicon links are emitted only if the files actually exist (no 404s)
+    - brand link reads "~/home" rather than the lowercased site title
+    - adds the light/dark toggle button
+  Everything else is the theme's markup, kept so its CSS classes still apply.
+*/ -}}
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Locale | default "en-us" }}">
+  <head>
+
+    {{ with resources.Get "img/favicon-32x32.png" }}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ .RelPermalink }}">
+    {{ end }}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.Description }}{{ end }}">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    <link rel="stylesheet" href="{{ "/css/style.css" | relURL }}" />
+    <link rel="stylesheet" href="{{ "/css/fonts.css" | relURL }}" />
+    {{ range .Site.Params.custom_css -}}
+    <link rel="stylesheet" href="{{ . | absURL }}">
+    {{- end }}
+    {{ with .OutputFormats.Get "rss" -}}
+    <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}">
+    {{ end -}}
+    {{ partial "head_custom.html" . }}
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <ul>
+          {{ $title := lower .Title }}
+          {{ $section := lower .Section }}
+          <li class="pull-left {{ if .IsHome }}current{{ end }}">
+            <a href="{{ .Site.BaseURL }}">~/home</a>
+          </li>
+          {{ range .Site.Menus.main }}
+          {{ $name := lower .Name }}
+          <li class="{{ if eq $name $title }}current{{ else if eq $section $name }}current{{ else if eq $title (pluralize $name) }}current{{ end }}">
+            <a href="{{ .URL }}">~/{{ lower .Name }}</a>
+          </li>
+          {{end}}
+
+          {{ range .Site.Menus.feed }}
+          <li>
+            <a href="{{ .URL }}">~/{{ lower .Name}}</a>
+          </li>
+          {{end}}
+
+          <li class="pull-right">
+            <button class="theme-toggle" type="button"
+                    aria-label="Toggle light and dark theme" title="Toggle theme">
+              <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.5 4.9l1.4-1.4 2.1 2.1-1.4 1.4L3.5 4.9zm13.5 13.5 1.4-1.4 2.1 2.1-1.4 1.4-2.1-2.1zM1 11h3v2H1v-2zm19 0h3v2h-3v-2zM4.9 20.5l-1.4-1.4 2.1-2.1 1.4 1.4-2.1 2.1zM18.4 7l-1.4-1.4 2.1-2.1L20.5 4.9 18.4 7z"/></svg>
+              <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.3 22a10 10 0 0 1-.8-19.97c.4-.03.67.42.44.75a7.5 7.5 0 0 0 9.28 11.15c.36-.16.75.14.66.53A10 10 0 0 1 12.3 22z"/></svg>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>

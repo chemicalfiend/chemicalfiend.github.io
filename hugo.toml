@@ -1,0 +1,123 @@
+baseURL = "https://chemicalfiend.github.io/"
+locale = "en-us"
+title = "Pranay Venkatesh"
+theme = "hugo-classic"
+enableEmoji = true
+enableRobotsTXT = true
+
+# Old Quarto site lived at /half-baked-ideas/*.html; those URLs are deliberately
+# not preserved. See CLAUDE.md.
+
+[permalinks]
+post = "/post/:year/:month/:day/:slug/"
+
+[taxonomies]
+tag = "tags"
+category = "categories"
+series = "series"
+
+# ---------------------------------------------------------------------------
+# Markup: maths via Goldmark passthrough (Hugo >= 0.122), rendered by KaTeX in
+# layouts/partials/foot_custom.html. Posts use plain $...$ and $$...$$.
+# https://gohugo.io/content-management/mathematics/
+# ---------------------------------------------------------------------------
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.goldmark.extensions.passthrough]
+enable = true
+
+[markup.goldmark.extensions.passthrough.delimiters]
+block  = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)'], ['$', '$']]
+
+[markup.highlight]
+codeFences = true
+guessSyntax = false
+lineNos = false
+noClasses = false          # emit classes; colours come from static/css/chroma.css
+style = "github-dark"      # regenerate: hugo gen chromastyles --style=github-dark > static/css/chroma.css
+tabWidth = 4
+
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 3
+
+# ---------------------------------------------------------------------------
+# Navigation
+# ---------------------------------------------------------------------------
+[[menu.main]]
+name = "posts"
+url = "/post/"
+weight = 1
+
+[[menu.main]]
+name = "tags"
+url = "/tags/"
+weight = 2
+
+[[menu.feed]]
+name = "rss"
+url = "/index.xml"
+
+# ---------------------------------------------------------------------------
+# Profile — drives layouts/index.html. Edit here, never in the template.
+# ---------------------------------------------------------------------------
+[params]
+description = "Chemical physics: quantum dynamics, transport and noise."
+author = "Pranay Venkatesh"
+role = "PhD student, Chemical Physics"
+organization = "University of Colorado, Boulder"
+avatar = "img/dp_me_w_hume.png"
+
+# Short bio shown to the right of the portrait. Markdown is rendered.
+bio = """
+I am a PhD student at the University of Colorado, Boulder, working on theoretical
+methods for charge, spin and energy transfer dynamics in molecular and solid-state
+systems. Before this I read Chemistry and Chemical Engineering at BITS Pilani, and
+wrote my master's thesis at Imperial College London.
+
+Outside of research I like anime, hiking and strange metal music.
+"""
+
+interests = [
+  "Quantum dynamics method development",
+  "Noise spectroscopy and quantum-enhanced sensing",
+  "Nonequilibrium transport in quantum materials",
+  "Chemical physics of optoelectronic devices",
+  "Mathematical models and simulations of matter",
+]
+
+[[params.education]]
+course = "PhD in Chemical Physics"
+institution = "University of Colorado, Boulder"
+year = "in progress"
+
+[[params.education]]
+course = "MSc Chemistry & BE Chemical Engineering"
+institution = "BITS Pilani"
+year = ""
+
+[[params.education]]
+course = "Master's thesis"
+institution = "Imperial College London"
+year = ""
+
+# icon = key matched to an inline SVG in layouts/partials/icon.html
+[[params.social]]
+name = "Google Scholar"
+icon = "scholar"
+url = "https://scholar.google.com/citations?user=4szVTK4AAAAJ&hl=en&oi=ao"
+
+[[params.social]]
+name = "GitHub"
+icon = "github"
+url = "https://github.com/chemicalfiend"
+
+[[params.social]]
+name = "LinkedIn"
+icon = "linkedin"
+url = "https://www.linkedin.com/in/pranay-venkatesh-1a191143/"
+
+# Number of posts shown in the "Recent Posts" block on the homepage.
+recent_posts = 5

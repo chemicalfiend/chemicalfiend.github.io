@@ -1,0 +1,9 @@
+---
+title: "Dynamical Quantum Phase Transitions"
+date: 2026-08-08T09:59:00-06:00
+draft: true
+math: true
+tags: ["statistics", "probability", "cumulants"]
+categories: ["half-baked"]
+series: ["DQPT"]
+---

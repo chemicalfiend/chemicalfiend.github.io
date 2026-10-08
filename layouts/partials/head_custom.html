@@ -1,0 +1,35 @@
+{{- /*
+  Applies the stored theme before first paint, so switching to light does not
+  flash dark on load. Must stay inline and synchronous in <head>.
+  Dark is the default: only an explicit "light" choice changes anything.
+*/ -}}
+<script>
+  (function () {
+    try {
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="{{ "css/chroma.css" | relURL }}">
+<meta name="color-scheme" content="dark light">
+
+{{- /*
+  KaTeX stylesheet, loaded only on pages with `math: true` in front matter.
+  Maths itself is rendered at build time by layouts/_markup/render-passthrough.html,
+  so NO KaTeX JavaScript is needed here — this is the stylesheet and webfonts only.
+
+  The version MUST track the KaTeX that Hugo embeds, or the pre-rendered markup
+  and the CSS drift apart. Hugo v0.164.0 pins katex ^0.16.21
+  (internal/warpc/js/package.json), hence the 0.16.x pin below.
+  On a Hugo upgrade, re-check that pin and refresh the integrity hash:
+    curl -s https://cdn.jsdelivr.net/npm/katex@<v>/dist/katex.min.css \
+      | openssl dgst -sha384 -binary | openssl base64 -A
+*/ -}}
+{{ if .Params.math }}
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css"
+      integrity="sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA"
+      crossorigin="anonymous">
+{{ end }}

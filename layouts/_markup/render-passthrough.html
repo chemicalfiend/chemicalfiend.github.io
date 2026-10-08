@@ -1,0 +1,17 @@
+{{- /*
+  Renders maths at BUILD TIME with Hugo's embedded KaTeX (transform.ToMath),
+  so no JavaScript ships to the reader: no CDN script, no flash of unrendered
+  source, and equations still work with JS disabled.
+
+  Pairs with [markup.goldmark.extensions.passthrough] in hugo.toml, which hands
+  us the raw $...$ / $$...$$ source untouched. Only the KaTeX *stylesheet* is
+  needed at runtime, and head_custom.html loads it solely on math pages.
+*/ -}}
+{{- $opts := dict "output" "htmlAndMathml" "displayMode" (eq .Type "block") -}}
+{{- with try (transform.ToMath .Inner $opts) -}}
+  {{- with .Err -}}
+    {{- errorf "KaTeX failed in %q: %s" $.Page.File.Path . -}}
+  {{- else -}}
+    {{- .Value -}}
+  {{- end -}}
+{{- end -}}

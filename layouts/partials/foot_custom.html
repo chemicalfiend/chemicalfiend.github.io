@@ -1,0 +1,22 @@
+{{- /*
+  Theme toggle behaviour. Dark is the default; only an explicit choice of
+  "light" is persisted. The pre-paint half of this lives in head_custom.html.
+  KaTeX loading is added here in phase 4.
+*/ -}}
+<script>
+  (function () {
+    var btn = document.querySelector('.theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var root = document.documentElement;
+      var light = root.getAttribute('data-theme') === 'light';
+      if (light) {
+        root.removeAttribute('data-theme');
+        try { localStorage.removeItem('theme'); } catch (e) {}
+      } else {
+        root.setAttribute('data-theme', 'light');
+        try { localStorage.setItem('theme', 'light'); } catch (e) {}
+      }
+    });
+  })();
+</script>

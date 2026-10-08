@@ -1,0 +1,89 @@
+{{ partial "header.html" . }}
+{{ $p := .Site.Params }}
+
+<div class="content-wrapper">
+
+  <section class="profile">
+
+    <div class="profile-side">
+      {{ with $p.avatar }}
+      <img class="portrait" src="{{ . | relURL }}"
+           alt="{{ $p.author | default site.Title }}"
+           width="190" height="190">
+      {{ end }}
+
+      <h1 class="profile-name">{{ $p.author | default site.Title }}</h1>
+      {{ with $p.role }}<p class="profile-role">{{ . }}</p>{{ end }}
+      {{ with $p.organization }}<p class="profile-org">{{ . }}</p>{{ end }}
+
+      {{ with $p.social }}
+      <ul class="network-icon">
+        {{ range . }}
+        <li>
+          <a href="{{ .url }}" title="{{ .name }}" aria-label="{{ .name }}"
+             {{ if not (hasPrefix .url "mailto:") }}rel="me noopener" target="_blank"{{ end }}>
+            {{ partial "icon.html" .icon }}
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+      {{ end }}
+    </div>
+
+    <div class="profile-main">
+      {{ with $p.bio }}<div class="bio">{{ . | markdownify }}</div>{{ end }}
+
+      {{/* Anything written in content/_index.md lands here, under the bio. */}}
+      {{ with .Content }}<div class="home-extra">{{ . }}</div>{{ end }}
+
+      <div class="profile-cols">
+        {{ with $p.interests }}
+        <div>
+          <h2>Interests</h2>
+          <ul>
+            {{ range . }}<li>{{ . | markdownify }}</li>{{ end }}
+          </ul>
+        </div>
+        {{ end }}
+
+        {{ with $p.education }}
+        <div>
+          <h2>Education</h2>
+          <ul class="edu-list">
+            {{ range . }}
+            <li>
+              <span class="edu-course">{{ .course }}</span>
+              <span class="edu-meta">
+                {{- .institution -}}
+                {{- with .year }}, {{ . }}{{ end -}}
+              </span>
+            </li>
+            {{ end }}
+          </ul>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+
+  </section>
+
+  {{ $posts := where site.RegularPages "Section" "post" }}
+  {{ with $posts }}
+  <section class="recent-posts">
+    <h2>Recent Posts</h2>
+    <ul class="post-list">
+      {{ range first ($p.recent_posts | default 5) . }}
+      <li>
+        <span class="date">{{ .Date.Format "2006/01/02" }}</span>
+        <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
+      </li>
+      {{ end }}
+    </ul>
+    {{ if gt (len .) ($p.recent_posts | default 5) }}
+    <a class="all-posts" href="{{ "/post/" | relURL }}">All posts &rarr;</a>
+    {{ end }}
+  </section>
+  {{ end }}
+
+</div>
+{{ partial "footer.html" . }}
